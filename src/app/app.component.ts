@@ -19,28 +19,43 @@ import { Idictionary } from './dictionary';
 export class AppComponent implements OnInit {
 
   constructor(private dictionaryservice: dictionaryservice) { }
-  word: string = "";
+  word: string = "apple";
   dicInfo:Idictionary|undefined;
   word1:string|undefined;
   ngOnInit(): void {
+  
   }
   getDictionary(){
-    this.dictionaryservice.getJson(this.word).pipe(
-      map(d=>({
-        ...d
-      })as Idictionary)
-    ).subscribe(response=>{
+   this.dictionaryservice.getJson(this.word).
+    subscribe(response=>{
       this.dicInfo=response;
       this.word1=response.word
     });
-    console.log(JSON.stringify(this.dicInfo))
+    //console.log(JSON.stringify(this.dicInfo?.word))
+    //console.log(JSON.stringify(this.dicInfo?.phonetics))
+    console.log(JSON.stringify(this.dicInfo?.meanings[0].partOfSpeech))
+    console.log(JSON.stringify(this.dicInfo?.meanings[0].definitions[0].definition))
+
+   // console.log(JSON.stringify(this.dicInfo?.license))
+   // console.log(JSON.stringify(this.dicInfo?.sourceUrls))
+
+    /*
     //this.word1=this.dicInfo?.word;
+    console.log(JSON.stringify(this.word1));
     console.log(this.dicInfo?.word);
-    console.log(JSON.stringify(this.dicInfo?.meanings));
     console.log(JSON.stringify(this.dicInfo?.license));
     console.log(JSON.stringify(this.dicInfo?.sourceUrls));
     console.log(JSON.stringify(this.dicInfo?.phonetics));
-    
+    for (let index = 0; index < this.dicInfo?.meanings.length; index++) {
+      const element = this.dicInfo?.meanings[index];
+      console.log(element);
+      
+    }
+*/
+    /*
+    const fruits = ["apple", "orange", "cherry"];
+    fruits.forEach(myFunction);
+    */
   }
   title = 'angular-dictionary';
 }
