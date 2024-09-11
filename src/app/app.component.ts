@@ -19,6 +19,11 @@ export class AppComponent implements OnInit,OnChanges {
 
   word?: string;
   fullurl:string=' ';
+      word1?:string;
+      phonetics?:JSON[];
+      meanings?:JSON[];
+      license?:JSON;
+      sourceUrls?:string[]
 constructor(private dictionaryservice: dictionaryservice) {
 }
 
@@ -31,15 +36,30 @@ constructor(private dictionaryservice: dictionaryservice) {
     {
       this.fullurl=this.dictionaryservice.getword(this.word);
       console.log(this.fullurl);
-      console.log(JSON.stringify(this.dictionary$));
+      //console.log(JSON.stringify(this.dictionary$));
+      /*this.dictionaryservice.getvaluefromhson().subscribe(d=>
+        {
+          this.word1=d.word;
+          this.phonetics=d.phonetics;
+          this.meanings=d.meanings;
+          this.license=d.license;
+          this.sourceUrls=d.sourceUrls;
+        });
+      console.log(this.dictionaryservice);*/
+     const dictionary=this.dictionaryservice.dictionary$;
+console.log(dictionary);
     }
       
-    dictionary$=this.dictionaryservice.dictionary$;
-  url(){
-    this.fullurl=this.dictionaryservice.getword(this.word);
-    console.log(this.fullurl);
-      console.log(JSON.stringify(this.dictionary$));
-  }
+    //dictionary$=this.dictionaryservice.getvaluefromhson;
+    
+    
+
+ 
+   // url(){
+    //this.fullurl=this.dictionaryservice.getword(this.word);
+   // console.log(this.fullurl);
+    //  console.log(JSON.stringify(this.dictionary$));
+ // }
   /*
   st():void
   {

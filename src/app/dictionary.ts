@@ -1,4 +1,4 @@
-export interface dictionary
+export interface Idictionary
 {
       word?:string,
       phonetics?:JSON[],
