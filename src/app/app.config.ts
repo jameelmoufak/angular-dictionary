@@ -2,11 +2,13 @@ import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } fr
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes),
+    provideHttpClient(),
     importProvidersFrom(
       TabsModule.forRoot()
-      )
+      ),
   ]
 };
