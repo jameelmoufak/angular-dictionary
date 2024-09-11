@@ -5,6 +5,7 @@ import { dictionaryservice } from './dictionary.service';
 import { FormsModule } from '@angular/forms';
 import { compileNgModule } from '@angular/compiler';
 import { CommonModule } from '@angular/common';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -30,10 +31,15 @@ constructor(private dictionaryservice: dictionaryservice) {
     {
       this.fullurl=this.dictionaryservice.getword(this.word);
       console.log(this.fullurl);
+      console.log(JSON.stringify(this.dictionary$));
     }
       
     dictionary$=this.dictionaryservice.dictionary$;
-  
+  url(){
+    this.fullurl=this.dictionaryservice.getword(this.word);
+    console.log(this.fullurl);
+      console.log(JSON.stringify(this.dictionary$));
+  }
   /*
   st():void
   {

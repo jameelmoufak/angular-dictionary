@@ -1,7 +1,8 @@
 export interface dictionary
 {
-      Meaning? : string[],
-      Synonyms? : string[],
-      Definitions? : string[],
-      Audio? : string[],
+      word?:string,
+      phonetics?:JSON[],
+      meanings?:JSON[],
+      license?:JSON,
+      sourceUrls?:string[]
 }
