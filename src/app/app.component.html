@@ -3,39 +3,9 @@
       <div class="col">
           <h3>Dictionary</h3>
           <input class="form-control" style="margin: 20px 0px;" type="text" [(ngModel)]="word" placeholder="search here" >
-  <!--        <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item">
-                  <a class="nav-link active" id="meaning-tab" data-toggle="tab" href="#meaning" role="tab"
-                      aria-controls="meaning" aria-selected="true">Meaning</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" id="synonyms-tab" data-toggle="tab" href="#synonyms" role="tab"
-                      aria-controls="synonyms" aria-selected="false">Synonyms</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" id="definitions-tab" data-toggle="tab" href="#definitions" role="tab"
-                      aria-controls="definitions" aria-selected="false">Definitions</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" id="audio-tab" data-toggle="tab" href="#audio" role="tab"
-                      aria-controls="audio" aria-expanded="false" aria-selected="false">Audio</a>
-              </li>
-          </ul>
-          <div class="tab-content" id="myTabContent">
-              <div class="tab-pane fade" id="meaning" role="tabpanel" aria-labelledby="meaning-tab">
-                  hello world Meaning</div>
-              <div class="tab-pane fade" id="synonyms" role="tabpanel" aria-labelledby="synonyms-tab">
-                  hello world synonyms</div>
-              <div class="tab-pane fade" id="definitions" role="tabpanel" aria-labelledby="definitions-tab">
-                  hello world definitions</div>
-              <div class="tab-pane fade" id="audio" aria-labelledby="audio-tab">click to hear voice
-                  <button style="border: none; background: none;"><i class="fa-solid fa-volume-high" style="color: #74C0FC;"></i></button>
-              </div>
-          </div>
-          -->
           <div>
             <tabset>
-              <tab aria-controls  heading="Meaning" id="tab1"><br>Basic content</tab>
+              <tab aria-controls  heading="Meaning" id="tab1"(selectTab)="getDictionary()"><br>Basic content</tab>
               <tab heading="Synonyms"><br>Basic content 1</tab>
               <tab heading="Definitions"><br>Basic content 2</tab>
               <tab heading="Audio"><br>click to hear voice
@@ -43,19 +13,10 @@
                   <i class="fa-solid fa-volume-high" style="color: #74C0FC;"></i>
                 </button>
               </tab>
-              <button style="border: none; background: red;" (click)="ngOnInit()">
-                dasdsasad
-              </button>
+              
             </tabset>
           </div>
-          <p>{{fullurl}}</p>
-
-          <p>{{word1}}</p>
-          <p>{{meanings}}</p>
-          <p>{{sourceUrls}}</p>
-          <p>{{license}}</p>
-          <p>{{phonetics}}</p>
-
+          <h6>{{word1}}</h6>
       </div>
   </div>
 </div>

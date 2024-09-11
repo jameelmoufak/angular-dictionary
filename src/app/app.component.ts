@@ -5,66 +5,37 @@ import { dictionaryservice } from './dictionary.service';
 import { FormsModule } from '@angular/forms';
 import { compileNgModule } from '@angular/compiler';
 import { CommonModule } from '@angular/common';
-import { tap } from 'rxjs';
+import { tap, timeout } from 'rxjs';
+import { Idictionary } from './dictionary';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TabsModule,FormsModule,CommonModule],
+  imports: [RouterOutlet, TabsModule, FormsModule, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 
-export class AppComponent implements OnInit,OnChanges {
+export class AppComponent implements OnInit {
 
-  word?: string;
-  fullurl:string=' ';
-      word1?:string;
-      phonetics?:JSON[];
-      meanings?:JSON[];
-      license?:JSON;
-      sourceUrls?:string[]
-constructor(private dictionaryservice: dictionaryservice) {
-}
-
-  ngOnChanges(changes: SimpleChanges): void 
-  {
-       
-   }
-
-    ngOnInit(): void 
-    {
-      this.fullurl=this.dictionaryservice.getword(this.word);
-      console.log(this.fullurl);
-      //console.log(JSON.stringify(this.dictionary$));
-      /*this.dictionaryservice.getvaluefromhson().subscribe(d=>
-        {
-          this.word1=d.word;
-          this.phonetics=d.phonetics;
-          this.meanings=d.meanings;
-          this.license=d.license;
-          this.sourceUrls=d.sourceUrls;
-        });
-      console.log(this.dictionaryservice);*/
-     const dictionary=this.dictionaryservice.dictionary$;
-console.log(dictionary);
-    }
-      
-    //dictionary$=this.dictionaryservice.getvaluefromhson;
+  constructor(private dictionaryservice: dictionaryservice) { }
+  word: string = "";
+  dicInfo?:Idictionary;
+  word1:string|undefined;
+  ngOnInit(): void {
+  }
+  getDictionary(){
+    this.dictionaryservice.getJson(this.word).subscribe(response=>{
+      this.dicInfo=response;
+    });
+    console.log(JSON.stringify(this.dicInfo))
+    //this.word1=this.dicInfo?.word;
+    console.log(JSON.stringify(this.dicInfo?.word));
+    console.log(JSON.stringify(this.dicInfo?.meanings));
+    console.log(JSON.stringify(this.dicInfo?.license));
+    console.log(JSON.stringify(this.dicInfo?.sourceUrls));
+    console.log(JSON.stringify(this.dicInfo?.phonetics));
     
-    
-
- 
-   // url(){
-    //this.fullurl=this.dictionaryservice.getword(this.word);
-   // console.log(this.fullurl);
-    //  console.log(JSON.stringify(this.dictionary$));
- // }
-  /*
-  st():void
-  {
-    this.word = this.dictionaryservice.getValueProp();
-    console.log(this.word);  
-  }*/
+  }
   title = 'angular-dictionary';
 }
