@@ -7,7 +7,7 @@ import { map, Observable, take } from "rxjs";
 })
 export class dictionaryservice {
   constructor(private http: HttpClient) { }
-  getJson(word:string): Observable<Idictionary>{
+  getJson(word:string): Observable<any>{
     return this.http.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
   }
 }
