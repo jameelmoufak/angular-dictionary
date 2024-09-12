@@ -1,15 +1,17 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Injectable, OnChanges, SimpleChanges } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Idictionary } from "./dictionary";
-import { catchError, EMPTY, map, Observable, take, tap, throwError } from "rxjs";
+import { catchError, EMPTY, map, Observable, throwError } from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class dictionaryservice {
+export class dictionaryservice{
   constructor(private http: HttpClient) { }
+  found:boolean=false;
   getDicionary(word: string): Observable<Idictionary> {
-    let a : Observable<Idictionary> = this.http.get<Idictionary[]>(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`).pipe(
+    return this.http.get<Idictionary[]>(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`).pipe(
       map(data => {
+        this.found=true;
         let dic: Idictionary = {
           word: data[0].word,
           phonetic: data[0].phonetic,
@@ -22,7 +24,6 @@ export class dictionaryservice {
       }),
       catchError(this.handleException)
     );
-    return a;
   }
   private handleException(err: HttpErrorResponse) {
     let errormessage = '';
@@ -32,6 +33,7 @@ export class dictionaryservice {
     else{
       errormessage=`Error: ${err.message}`;
     }
+    this.found=false
     return throwError(()=> errormessage);
   }
 }

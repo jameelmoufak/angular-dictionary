@@ -1,12 +1,11 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { dictionaryservice } from './dictionary.service';
 import { FormsModule } from '@angular/forms';
-import { compileNgModule } from '@angular/compiler';
 import { CommonModule } from '@angular/common';
-import { EMPTY, isEmpty, map, Observable, tap, timeout } from 'rxjs';
 import { Idictionary } from './dictionary';
+import { catchError, EMPTY, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -16,36 +15,39 @@ import { Idictionary } from './dictionary';
   styleUrl: './app.component.css'
 })
 
-export class AppComponent {
-[x: string]: any;
-
+export class AppComponent implements OnDestroy {
   constructor(private dictionaryservice: dictionaryservice) { }
 
   searchWord: string = "";
   dicInfo: Idictionary | undefined;
-  audiosrc:any='';
-  wordsearchnotfound:string='';
-
+  audiosrc: any = '';
+  wordsearchnotfound: string = '';
+  subscription?: Subscription;
+  found:boolean= true;
   getDictionary() {
-    this.dictionaryservice.getDicionary(this.searchWord).
+    this.subscription = this.dictionaryservice.getDicionary(this.searchWord).
       subscribe(response => {
         this.dicInfo = response;
-        this.audiosrc=this.dicInfo.phonetics[0].audio;
       });
-  }
-  playaudio()
-  {
-    let audio = new Audio();
-  audio.src = this.audiosrc;
-  audio.play();
-  this.wordsearchnotfound='';
-  audio.play()
-       .catch(() => {
-              console.log('the word search is not found');
-              this.wordsearchnotfound="the word search is not found"
-  });
-  }
-  
 
-  title = 'angular-dictionary';
+  }
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+  playaudio() {
+    for (let i = 0; i < this.dicInfo?.phonetics.length; i++) {
+      if(this.dicInfo?.phonetics[i].audio!=''){
+        this.audiosrc=this.dicInfo?.phonetics[i].audio;
+        break;
+      }
+    }
+    let audio = new Audio();
+    audio.src = this.audiosrc;
+    this.wordsearchnotfound = '';
+    audio.play()
+    .catch(() => {
+      console.log('the word search is not found');
+      this.wordsearchnotfound = "the word search is not found"
+    });
+  }
 }

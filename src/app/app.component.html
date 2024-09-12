@@ -2,40 +2,46 @@
   <div class="row" style="padding: 20px 40px;">
     <div class="col">
       <h3>Dictionary</h3>
-      <input class="form-control" style="margin: 20px 0px;" type="text" (keyup)="getDictionary()" [(ngModel)]="searchWord"
-        placeholder="search here">
-      <div>
+      <input #search="ngModel" required id="search" class="form-control" style="margin: 20px 0px;" type="text"
+        (keyup)="getDictionary()" [(ngModel)]="searchWord" placeholder="search here">
+      @if(search.control.dirty && search.control.invalid){
+      <span class="text-danger">insert word to search</span>
+      }
+      @if (!found) {<h3>Not Found</h3>}
+      @if(found)
+      {
+        <div>
         <h4>{{dicInfo?.word}}</h4>
         <tabset>
           <tab aria-controls heading="Meaning" id="tab1"><br>
             <ul>
               @for (meaning of dicInfo?.meanings; track $index) {
-                <p style="font-style: italic;">{{meaning.partOfSpeech}}</p>
-                @for (definiton of meaning.definitions; track $index) {
-                  <li>{{definiton.definition}}</li>
-                }
-                <br>
+              <p style="font-style: italic;">{{meaning.partOfSpeech}}</p>
+              @for (definiton of meaning.definitions; track $index) {
+              <li>{{definiton.definition}}</li>
+              }
+              <br>
               }
             </ul>
           </tab>
           <tab heading="Synonyms"><br>
-              <ul>
-                @for (meaning of dicInfo?.meanings; track $index) {
-                  @for (synonym of meaning.synonyms; track $index) {
-                    <li>{{synonym}}</li>
-                  }
-                  <br>
-                }
-              </ul>
+            <ul>
+              @for (meaning of dicInfo?.meanings; track $index) {
+              @for (synonym of meaning.synonyms; track $index) {
+              <li>{{synonym}}</li>
+              }
+              <br>
+              }
+            </ul>
           </tab>
           <tab heading="Definitions"><br>
             <p>Therer we Show Examples for this word</p><br>
             <ul>
               @for (meaning of dicInfo?.meanings; track $index) {
-                @for (definiton of meaning.definitions; track $index) {
-                  @if(definiton.example){<li>{{definiton.example}}</li>}
-                }
-                <br>
+              @for (definiton of meaning.definitions; track $index) {
+              @if(definiton.example){<li>{{definiton.example}}</li>}
+              }
+              <br>
               }
             </ul>
           </tab>
@@ -47,7 +53,7 @@
           </tab>
         </tabset>
       </div>
-
+      }
     </div>
   </div>
 </div>
