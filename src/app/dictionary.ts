@@ -1,4 +1,4 @@
-export class Idictionary
+export interface Idictionary
 {
       word:string;
       phonetic:string;
@@ -6,18 +6,5 @@ export class Idictionary
       meanings:any;
       license:any;
       sourceUrls:string[];
-      constructor(word:string,
-            phonetic:string,
-            phonetics:any,
-            meanings:any,
-            license:any,
-            sourceUrls:string[])
-      {
-     this.word=word;      
-     this.phonetic=phonetic;
-     this.phonetics=phonetics;  
-     this.meanings=meanings;      
-     this.license=license;       
-     this.sourceUrls=sourceUrls;       
-      }
+
 }
