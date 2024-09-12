@@ -39,12 +39,12 @@
               }
             </ul>
           </tab>
-          <tab heading="Audio"><br>click to hear voice
-            <button style="border: none; background: none;">
+          <tab heading="Audio"><br><span style=" font-weight: bold;">click to hear voice</span>
+            <button style="border: none; background: none;" (click)="playaudio()">
               <i class="fa-solid fa-volume-high" style="color: #74C0FC;"></i>
             </button>
+            <p style="color: red;">{{wordsearchnotfound}}</p>
           </tab>
-
         </tabset>
       </div>
 

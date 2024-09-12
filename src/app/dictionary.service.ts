@@ -7,7 +7,6 @@ import { catchError, EMPTY, map, Observable, take, tap, throwError } from "rxjs"
 })
 export class dictionaryservice {
   constructor(private http: HttpClient) { }
-
   getDicionary(word: string): Observable<Idictionary> {
     let a : Observable<Idictionary> = this.http.get<Idictionary[]>(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`).pipe(
       map(data => {
@@ -35,6 +34,4 @@ export class dictionaryservice {
     }
     return throwError(()=> errormessage);
   }
-
-
 }
