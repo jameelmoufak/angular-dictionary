@@ -2,12 +2,15 @@
   <div class="row" style="padding: 20px 40px;">
     <div class="col">
       <h3>Dictionary</h3>
-      <input #search="ngModel" required id="search" class="form-control" style="margin: 20px 0px;" type="text"
+      <input #search="ngModel" pattern="[A-Za-z0-9]+" required id="search" class="form-control" style="margin: 20px 0px;" type="text"
         (keyup)="getDictionary()" [(ngModel)]="searchWord" placeholder="search here">
-      @if(search.control.dirty && search.control.invalid){
+      @if(search.control.dirty && search.control.invalid && searchWord==''){
       <span class="text-danger">insert word to search</span>
       }
-      @if (!found) {<h3>Not Found</h3>}
+      @else if(searchWord != "" && search.control.invalid){
+        <span class="text-danger">Only letter is Allowed (UnExpected examples +/-=*)</span>
+        }
+      @if (!found && searchWord != '') {<h3>Not Found</h3>}
       @if(found)
       {
         <div>
@@ -49,7 +52,6 @@
             <button style="border: none; background: none;" (click)="playaudio()">
               <i class="fa-solid fa-volume-high" style="color: #74C0FC;"></i>
             </button>
-            <p style="color: red;">{{wordsearchnotfound}}</p>
           </tab>
         </tabset>
       </div>

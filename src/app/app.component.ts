@@ -5,7 +5,7 @@ import { dictionaryservice } from './dictionary.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Idictionary } from './dictionary';
-import { catchError, EMPTY, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -23,12 +23,16 @@ export class AppComponent implements OnDestroy {
   audiosrc: any = '';
   wordsearchnotfound: string = '';
   subscription?: Subscription;
-  found:boolean= true;
+  found: boolean = false;
   getDictionary() {
     this.subscription = this.dictionaryservice.getDicionary(this.searchWord).
-      subscribe(response => {
-        this.dicInfo = response;
-      });
+      subscribe(
+        (response => {
+          this.dicInfo = response;
+          this.found = true;
+        }),
+        (() => this.found = false)
+      );
 
   }
   ngOnDestroy(): void {
@@ -36,8 +40,8 @@ export class AppComponent implements OnDestroy {
   }
   playaudio() {
     for (let i = 0; i < this.dicInfo?.phonetics.length; i++) {
-      if(this.dicInfo?.phonetics[i].audio!=''){
-        this.audiosrc=this.dicInfo?.phonetics[i].audio;
+      if (this.dicInfo?.phonetics[i].audio != '') {
+        this.audiosrc = this.dicInfo?.phonetics[i].audio;
         break;
       }
     }
@@ -45,9 +49,9 @@ export class AppComponent implements OnDestroy {
     audio.src = this.audiosrc;
     this.wordsearchnotfound = '';
     audio.play()
-    .catch(() => {
-      console.log('the word search is not found');
-      this.wordsearchnotfound = "the word search is not found"
-    });
+      .catch(() => {
+        console.log('the word search is not found');
+        this.wordsearchnotfound = "the word search is not found"
+      });
   }
 }

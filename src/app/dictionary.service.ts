@@ -5,13 +5,11 @@ import { catchError, EMPTY, map, Observable, throwError } from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class dictionaryservice{
+export class dictionaryservice {
   constructor(private http: HttpClient) { }
-  found:boolean=false;
   getDicionary(word: string): Observable<Idictionary> {
     return this.http.get<Idictionary[]>(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`).pipe(
       map(data => {
-        this.found=true;
         let dic: Idictionary = {
           word: data[0].word,
           phonetic: data[0].phonetic,
@@ -27,13 +25,12 @@ export class dictionaryservice{
   }
   private handleException(err: HttpErrorResponse) {
     let errormessage = '';
-    if(err.error instanceof ErrorEvent){
-      errormessage=`Error: ${err.error.message}`;
+    if (err.error instanceof ErrorEvent) {
+      errormessage = `Error: ${err.error.message}`;
     }
-    else{
-      errormessage=`Error: ${err.message}`;
+    else {
+      errormessage = `Error: ${err.message}`;
     }
-    this.found=false
-    return throwError(()=> errormessage);
+    return throwError(() => errormessage);
   }
 }
