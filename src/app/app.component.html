@@ -1,23 +1,53 @@
 <div class="container" style="margin-top: 100px; width: 75%;">
   <div class="row" style="padding: 20px 40px;">
-      <div class="col">
-          <h3>Dictionary</h3>
-          <input class="form-control" style="margin: 20px 0px;" type="text" [(ngModel)]="word" placeholder="search here" >
-          <div>
-            <tabset>
-              <tab aria-controls  heading="Meaning" id="tab1"(selectTab)="getDictionary()"><br>Basic content</tab>
-              <tab heading="Synonyms"><br>Basic content 1</tab>
-              <tab heading="Definitions"><br>Basic content 2</tab>
-              <tab heading="Audio"><br>click to hear voice
-                <button style="border: none; background: none;">
-                  <i class="fa-solid fa-volume-high" style="color: #74C0FC;"></i>
-                </button>
-              </tab>
-              
-            </tabset>
-          </div>
-          <h6>{{word1}}</h6>
-         
+    <div class="col">
+      <h3>Dictionary</h3>
+      <input class="form-control" style="margin: 20px 0px;" type="text" (keyup)="getDictionary()" [(ngModel)]="searchWord"
+        placeholder="search here">
+      <div>
+        <h4>{{dicInfo?.word}}</h4>
+        <tabset>
+          <tab aria-controls heading="Meaning" id="tab1"><br>
+            <ul>
+              @for (meaning of dicInfo?.meanings; track $index) {
+                <p style="font-style: italic;">{{meaning.partOfSpeech}}</p>
+                @for (definiton of meaning.definitions; track $index) {
+                  <li>{{definiton.definition}}</li>
+                }
+                <br>
+              }
+            </ul>
+          </tab>
+          <tab heading="Synonyms"><br>
+              <ul>
+                @for (meaning of dicInfo?.meanings; track $index) {
+                  @for (synonym of meaning.synonyms; track $index) {
+                    <li>{{synonym}}</li>
+                  }
+                  <br>
+                }
+              </ul>
+          </tab>
+          <tab heading="Definitions"><br>
+            <p>Therer we Show Examples for this word</p><br>
+            <ul>
+              @for (meaning of dicInfo?.meanings; track $index) {
+                @for (definiton of meaning.definitions; track $index) {
+                  @if(definiton.example){<li>{{definiton.example}}</li>}
+                }
+                <br>
+              }
+            </ul>
+          </tab>
+          <tab heading="Audio"><br>click to hear voice
+            <button style="border: none; background: none;">
+              <i class="fa-solid fa-volume-high" style="color: #74C0FC;"></i>
+            </button>
+          </tab>
+
+        </tabset>
       </div>
+
+    </div>
   </div>
 </div>
